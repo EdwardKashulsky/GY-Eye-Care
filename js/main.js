@@ -117,41 +117,59 @@
         ],
     });
 
-    $('#contactForm').on('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
+    $('#contactForm').on('submit', async function (event) {
+        event.preventDefault();
 
-        // Retrieve form data using jQuery
         var name = $(this).find('input[name="name"]').val();
         var email = $(this).find('input[name="email"]').val();
-        var subject = $(this).find('input[name="subject"]').val();
+        var phone = $(this).find('input[name="phone"]').val();
         var message = $(this).find('textarea[name="message"]').val();
 
-        // Log form data to the console
-        console.log('Name:', name);
-        console.log('Email:', email);
-        console.log('Subject:', subject);
-        console.log('Message:', message);
-
-        location.reload()
+        var service_id = "service_eqboyd8";
+        var template_id = "template_4dbyg8h";
+        var template_params = {
+            "name": name,
+            "email": email,
+            "phone": phone,
+            "message": message,
+        };
+        emailjs.init("RgZDBeexu9_5Mq4eQ");
+        await emailjs.send(service_id, template_id, template_params)
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+            }, function (error) {
+                console.log('FAILED...', error);
+            });
+        location.reload();
     });
 
-    $('#appointmentForm').on('submit', function (event) {
-        event.preventDefault(); // Prevent the default form submission
+    $('#appointmentForm').on('submit', async function (event) {
+        event.preventDefault();
 
         var service = $(this).find('select[name="service"]').val();
         var doctor = $(this).find('select[name="doctor"]').val();
         var name = $(this).find('input[name="name"]').val();
-        var email = $(this).find('input[name="email"]').val();
+        var phone = $(this).find('input[name="phone"]').val();
         var appointmentDate = $(this).find('input[name="appointmentDate"]').val();
         var appointmentTime = $(this).find('input[name="appointmentTime"]').val();
 
-        console.log('Selected Service:', service);
-        console.log('Selected Doctor:', doctor);
-        console.log('Name:', name);
-        console.log('Email:', email);
-        console.log('Appointment Date:', appointmentDate);
-        console.log('Appointment Time:', appointmentTime);
-
+        var service_id = "service_eqboyd8";
+        var template_id = "template_sxwli06";
+        var template_params = {
+            "service": service,
+            "doctor": doctor,
+            "name": name,
+            "phone": phone,
+            "appointmentDate": appointmentDate,
+            "appointmentTime": appointmentTime
+        };
+        emailjs.init("RgZDBeexu9_5Mq4eQ");
+        await emailjs.send(service_id, template_id, template_params)
+            .then(function (response) {
+                console.log('SUCCESS!', response.status, response.text);
+            }, function (error) {
+                console.log('FAILED...', error);
+            });
         location.reload()
     });
 
